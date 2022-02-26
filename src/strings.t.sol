@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.8.0;
 
 import 'ds-test/test.sol';
 import './strings.sol';
@@ -58,8 +58,6 @@ contract StringsTest is DSTest {
     function testLen() public {
         assertEq("".toSlice().len(), 0);
         assertEq("Hello, world!".toSlice().len(), 13);
-        assertEq("naïve".toSlice().len(), 5);
-        assertEq("こんにちは".toSlice().len(), 5);
     }
 
     function testEmpty() public {
@@ -73,25 +71,6 @@ contract StringsTest is DSTest {
         assertTrue(!"foo".toSlice().equals("bar".toSlice()));
     }
 
-    function testNextRune() public {
-        strings.slice memory s = "a¡ࠀ𐀡".toSlice();
-        assertEq0(s.nextRune(), "a");
-        assertEq0(s, "¡ࠀ𐀡");
-        assertEq0(s.nextRune(), "¡");
-        assertEq0(s, "ࠀ𐀡");
-        assertEq0(s.nextRune(), "ࠀ");
-        assertEq0(s, "𐀡");
-        assertEq0(s.nextRune(), "𐀡");
-        assertEq0(s, "");
-        assertEq0(s.nextRune(), "");
-    }
-
-    function testOrd() public {
-        assertEq("a".toSlice().ord(), 0x61);
-        assertEq("¡".toSlice().ord(), 0xA1);
-        assertEq("ࠀ".toSlice().ord(), 0x800);
-        assertEq("𐀡".toSlice().ord(), 0x10021);
-    }
 
     function testCompare() public {
 
